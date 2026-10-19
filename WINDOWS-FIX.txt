@@ -1,0 +1,71 @@
+===========================================================
+  FIX FOR THE "EPERM" / "ERR_INVALID_ARG_TYPE" npm ERROR
+  (Windows)
+===========================================================
+
+Your app code is fine. The error is Windows locking files while
+npm installs. It is caused by WHERE the project folder is and
+WHAT it is named. Fix it in 5 easy steps.
+
+
+STEP 1 — Move the project to a simple folder
+------------------------------------------------
+The current folder is a problem because it is:
+  - inside "Downloads" (OneDrive keeps syncing and locking it)
+  - named with spaces and brackets:  "... App\grade-10-algebra-web-app (1)"
+
+Make a clean folder and move the project there. For example:
+
+  1. Open File Explorer.
+  2. Go to the C: drive.
+  3. Make a new folder called:   dev
+  4. Inside it make a folder called:   mathtrainer
+  5. Copy ALL the project files into:   C:\dev\mathtrainer
+
+Final path should look like:
+  C:\dev\mathtrainer
+(No spaces. No brackets. Not in Downloads. Not in OneDrive.)
+
+
+STEP 2 — Close anything that locks files
+------------------------------------------------
+  - Close VS Code completely (then reopen it on the NEW folder).
+  - Pause OneDrive (right-click the OneDrive cloud icon -> Pause syncing).
+  - If you have antivirus with "folder protection", allow this folder.
+
+
+STEP 3 — Delete the broken node_modules
+------------------------------------------------
+Inside C:\dev\mathtrainer delete these if they exist:
+  - the folder   node_modules
+  - the file     package-lock.json
+
+(If Windows says a file is "in use", restart the PC first,
+ then delete them before opening any editor.)
+
+
+STEP 4 — Run the clean install
+------------------------------------------------
+Option A (easiest): double-click   setup-windows.bat
+
+Option B (manual): open the folder in VS Code, open a terminal
+(Terminal -> New Terminal) and run:
+
+  npm cache clean --force
+  npm install
+  npm run dev
+
+Then open the http://localhost:5173 link that appears.
+
+
+STEP 5 — Still failing?
+------------------------------------------------
+  - Make sure Node.js is version 20.19 or newer:   node -v
+    If older, install the LTS from https://nodejs.org and retry.
+  - Run the terminal as a normal user (NOT "Run as administrator").
+  - Try a different terminal: use "Command Prompt" instead of PowerShell,
+    or PowerShell instead of Git Bash.
+  - Make sure you are actually inside the project folder. The terminal
+    prompt should end with:  \mathtrainer>
+
+That is all. Once "npm run dev" shows the local link, the app is running.
